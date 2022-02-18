@@ -7,6 +7,12 @@ To use hex data formatted ibc packets instead of raw string. Raw string can caus
 npm i -g polymerdao/ts-relayer
 ```
 
+or 
+```sh
+# first clone the repo, then `cd repo_root_dir`
+npm run build && npm link
+```
+
 # Relayer
 
 Typescript implementation of an [IBC](https://ibcprotocol.org/) Relayer.
