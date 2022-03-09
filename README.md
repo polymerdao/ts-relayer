@@ -4,7 +4,8 @@ To use hex data formatted ibc packets instead of raw string. Raw string can caus
 
 **Installation**
 ```sh
-npm i -g polymerdao/ts-relayer
+yarn add npm-run-all --dev
+npm i -g
 ```
 
 or 
