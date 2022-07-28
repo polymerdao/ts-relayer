@@ -8,10 +8,10 @@ yarn add npm-run-all --dev
 npm i -g
 ```
 
-or 
+or
 ```sh
 # first clone the repo, then `cd repo_root_dir`
-npm run build && npm link
+npm install && npm run build && npm link
 ```
 
 # Relayer
