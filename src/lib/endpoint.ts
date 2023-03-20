@@ -1,6 +1,6 @@
 import { toHex } from '@cosmjs/encoding';
 import { logs } from '@cosmjs/stargate';
-import { tendermint34 } from '@cosmjs/tendermint-rpc';
+import { tendermint37 } from '@cosmjs/tendermint-rpc';
 import { Packet } from 'cosmjs-types/ibc/core/channel/v1/channel';
 
 import { IbcClient } from './ibcclient';
@@ -57,7 +57,7 @@ export class Endpoint {
     return this.client.chainId;
   }
 
-  public async getLatestCommit(): Promise<tendermint34.CommitResponse> {
+  public async getLatestCommit(): Promise<tendermint37.CommitResponse> {
     return this.client.getCommit();
   }
 

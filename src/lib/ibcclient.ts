@@ -18,8 +18,8 @@ import {
 } from '@cosmjs/stargate';
 import {
   ReadonlyDateWithNanoseconds,
-  tendermint34,
-  Tendermint34Client,
+  tendermint37,
+  Tendermint37Client,
 } from '@cosmjs/tendermint-rpc';
 import { arrayContentEquals, assert, sleep } from '@cosmjs/utils';
 import { Any } from 'cosmjs-types/google/protobuf/any';
@@ -195,7 +195,7 @@ export class IbcClient {
     BankExtension &
     IbcExtension &
     StakingExtension;
-  public readonly tm: Tendermint34Client;
+  public readonly tm: Tendermint37Client;
   public readonly senderAddress: string;
   public readonly logger: Logger;
 
@@ -215,12 +215,12 @@ export class IbcClient {
       ...options,
       registry: ibcRegistry(),
     };
-    const signingClient = await SigningStargateClient.connectWithSigner(
-      endpoint,
+    const tmClient = await Tendermint37Client.connect(endpoint);
+    const signingClient = await SigningStargateClient.createWithSigner(
+      tmClient,
       signer,
       mergedOptions
     );
-    const tmClient = await Tendermint34Client.connect(endpoint);
     const chainId = await signingClient.getChainId();
     return new IbcClient(
       signingClient,
@@ -233,7 +233,7 @@ export class IbcClient {
 
   private constructor(
     signingClient: SigningStargateClient,
-    tmClient: Tendermint34Client,
+    tmClient: Tendermint37Client,
     senderAddress: string,
     chainId: string,
     options: IbcClientOptions
@@ -289,14 +289,14 @@ export class IbcClient {
     return this.sign.getChainId();
   }
 
-  public async header(height: number): Promise<tendermint34.Header> {
+  public async header(height: number): Promise<tendermint37.Header> {
     this.logger.verbose(`Get header for height ${height}`);
     // TODO: expose header method on tmClient and use that
     const resp = await this.tm.blockchain(height, height);
     return resp.blockMetas[0].header;
   }
 
-  public async latestHeader(): Promise<tendermint34.Header> {
+  public async latestHeader(): Promise<tendermint37.Header> {
     // TODO: expose header method on tmClient and use that
     const block = await this.tm.block();
     return block.block.header;
@@ -335,7 +335,7 @@ export class IbcClient {
     await sleep(this.estimatedIndexerTime);
   }
 
-  public getCommit(height?: number): Promise<tendermint34.CommitResponse> {
+  public getCommit(height?: number): Promise<tendermint37.CommitResponse> {
     this.logger.verbose(
       height === undefined
         ? 'Get latest commit'

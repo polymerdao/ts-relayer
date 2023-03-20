@@ -3,7 +3,7 @@ import { logs } from '@cosmjs/stargate';
 import {
   fromRfc3339WithNanoseconds,
   ReadonlyDateWithNanoseconds,
-  tendermint34,
+  tendermint37,
 } from '@cosmjs/tendermint-rpc';
 import test from 'ava';
 import Long from 'long';
@@ -25,14 +25,14 @@ test('stringifyEvent works', (t) => {
     type: 'coin_spent',
     attributes: [
       {
-        key: fromBase64('c3BlbmRlcg=='),
+        key: fromBase64('c3BlbmRlcg==').toString(),
         value: fromBase64(
           'anVubzEwMHM0NXM0aDk0cWRrY2FmbW1ycWZsdGxyZ3lxd3luNmUwNWp4Mg=='
-        ),
+        ).toString(),
       },
       {
-        key: fromBase64('YW1vdW50'),
-        value: fromBase64('MzY5NDV1anVub3g='),
+        key: fromBase64('YW1vdW50').toString(),
+        value: fromBase64('MzY5NDV1anVub3g=').toString(),
       },
     ],
   });
@@ -55,14 +55,14 @@ test('stringifyEvent works', (t) => {
     type: 'coin_spent',
     attributes: [
       {
-        key: new Uint8Array([0, 159, 146, 150]),
+        key: new Uint8Array([0, 159, 146, 150]).toString(),
         value: fromBase64(
           'anVubzEwMHM0NXM0aDk0cWRrY2FmbW1ycWZsdGxyZ3lxd3luNmUwNWp4Mg=='
-        ),
+        ).toString(),
       },
       {
-        key: fromBase64('YW1vdW50'),
-        value: fromBase64('MzY5NDV1anVub3g='),
+        key: fromBase64('YW1vdW50').toString(),
+        value: fromBase64('MzY5NDV1anVub3g=').toString(),
       },
     ],
   });
@@ -85,15 +85,15 @@ test('stringifyEvent works', (t) => {
     type: 'coin_spent',
     attributes: [
       {
-        key: fromBase64('c3BlbmRlcg=='),
+        key: fromBase64('c3BlbmRlcg==').toString(),
         // https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=7c1a7f484132afdebfa19b65dab60bbd
         value: new Uint8Array([
           72, 101, 108, 108, 111, 32, 240, 144, 128, 87, 111, 114, 108, 100,
-        ]),
+        ]).toString(),
       },
       {
-        key: fromBase64('YW1vdW50'),
-        value: fromBase64('MzY5NDV1anVub3g='),
+        key: fromBase64('YW1vdW50').toString(),
+        value: fromBase64('MzY5NDV1anVub3g=').toString(),
       },
     ],
   });
@@ -114,19 +114,19 @@ test('stringifyEvent works', (t) => {
 
 test('parsePacketsFromEvents', (t) => {
   // From https://gist.github.com/webmaster128/14d273b3b462c1c653f51e3e1edb8cd5
-  const events: tendermint34.Event[] = [
+  const events: tendermint37.Event[] = [
     {
       type: 'coin_spent',
       attributes: [
         {
-          key: fromBase64('c3BlbmRlcg=='),
+          key: fromBase64('c3BlbmRlcg==').toString(),
           value: fromBase64(
             'anVubzEwMHM0NXM0aDk0cWRrY2FmbW1ycWZsdGxyZ3lxd3luNmUwNWp4Mg=='
-          ),
+          ).toString(),
         },
         {
-          key: fromBase64('YW1vdW50'),
-          value: fromBase64('MzY5NDV1anVub3g='),
+          key: fromBase64('YW1vdW50').toString(),
+          value: fromBase64('MzY5NDV1anVub3g=').toString(),
         },
       ],
     },
@@ -134,14 +134,14 @@ test('parsePacketsFromEvents', (t) => {
       type: 'coin_received',
       attributes: [
         {
-          key: fromBase64('cmVjZWl2ZXI='),
+          key: fromBase64('cmVjZWl2ZXI=').toString(),
           value: fromBase64(
             'anVubzE3eHBmdmFrbTJhbWc5NjJ5bHM2Zjg0ejNrZWxsOGM1bHh0cW12cA=='
-          ),
+          ).toString(),
         },
         {
-          key: fromBase64('YW1vdW50'),
-          value: fromBase64('MzY5NDV1anVub3g='),
+          key: fromBase64('YW1vdW50').toString(),
+          value: fromBase64('MzY5NDV1anVub3g=').toString(),
         },
       ],
     },
@@ -149,20 +149,20 @@ test('parsePacketsFromEvents', (t) => {
       type: 'transfer',
       attributes: [
         {
-          key: fromBase64('cmVjaXBpZW50'),
+          key: fromBase64('cmVjaXBpZW50').toString(),
           value: fromBase64(
             'anVubzE3eHBmdmFrbTJhbWc5NjJ5bHM2Zjg0ejNrZWxsOGM1bHh0cW12cA=='
-          ),
+          ).toString(),
         },
         {
-          key: fromBase64('c2VuZGVy'),
+          key: fromBase64('c2VuZGVy').toString(),
           value: fromBase64(
             'anVubzEwMHM0NXM0aDk0cWRrY2FmbW1ycWZsdGxyZ3lxd3luNmUwNWp4Mg=='
-          ),
+          ).toString(),
         },
         {
-          key: fromBase64('YW1vdW50'),
-          value: fromBase64('MzY5NDV1anVub3g='),
+          key: fromBase64('YW1vdW50').toString(),
+          value: fromBase64('MzY5NDV1anVub3g=').toString(),
         },
       ],
     },
@@ -170,10 +170,10 @@ test('parsePacketsFromEvents', (t) => {
       type: 'message',
       attributes: [
         {
-          key: fromBase64('c2VuZGVy'),
+          key: fromBase64('c2VuZGVy').toString(),
           value: fromBase64(
             'anVubzEwMHM0NXM0aDk0cWRrY2FmbW1ycWZsdGxyZ3lxd3luNmUwNWp4Mg=='
-          ),
+          ).toString(),
         },
       ],
     },
@@ -181,8 +181,8 @@ test('parsePacketsFromEvents', (t) => {
       type: 'tx',
       attributes: [
         {
-          key: fromBase64('ZmVl'),
-          value: fromBase64('MzY5NDV1anVub3g='),
+          key: fromBase64('ZmVl').toString(),
+          value: fromBase64('MzY5NDV1anVub3g=').toString(),
         },
       ],
     },
@@ -190,10 +190,10 @@ test('parsePacketsFromEvents', (t) => {
       type: 'tx',
       attributes: [
         {
-          key: fromBase64('YWNjX3NlcQ=='),
+          key: fromBase64('YWNjX3NlcQ==').toString(),
           value: fromBase64(
             'anVubzEwMHM0NXM0aDk0cWRrY2FmbW1ycWZsdGxyZ3lxd3luNmUwNWp4Mi8xMjQ5Mg=='
-          ),
+          ).toString(),
         },
       ],
     },
@@ -201,10 +201,10 @@ test('parsePacketsFromEvents', (t) => {
       type: 'tx',
       attributes: [
         {
-          key: fromBase64('c2lnbmF0dXJl'),
+          key: fromBase64('c2lnbmF0dXJl').toString(),
           value: fromBase64(
             'Sm42eW9WYlFPdFIxWlNHRW1lQmQ4c2VaOTl5RHlqdlJ2eU8rR1hGL1FGaDh3bzR2Tm5EckFFUzNxNmk0Sy9XTnhhdkNFRDAxVXNSK0hJYVB2djdRNkE9PQ=='
-          ),
+          ).toString(),
         },
       ],
     },
@@ -212,8 +212,10 @@ test('parsePacketsFromEvents', (t) => {
       type: 'message',
       attributes: [
         {
-          key: fromBase64('YWN0aW9u'),
-          value: fromBase64('L2Nvc213YXNtLndhc20udjEuTXNnRXhlY3V0ZUNvbnRyYWN0'),
+          key: fromBase64('YWN0aW9u').toString(),
+          value: fromBase64(
+            'L2Nvc213YXNtLndhc20udjEuTXNnRXhlY3V0ZUNvbnRyYWN0'
+          ).toString(),
         },
       ],
     },
@@ -221,14 +223,14 @@ test('parsePacketsFromEvents', (t) => {
       type: 'message',
       attributes: [
         {
-          key: fromBase64('bW9kdWxl'),
-          value: fromBase64('d2FzbQ=='),
+          key: fromBase64('bW9kdWxl').toString(),
+          value: fromBase64('d2FzbQ==').toString(),
         },
         {
-          key: fromBase64('c2VuZGVy'),
+          key: fromBase64('c2VuZGVy').toString(),
           value: fromBase64(
             'anVubzEwMHM0NXM0aDk0cWRrY2FmbW1ycWZsdGxyZ3lxd3luNmUwNWp4Mg=='
-          ),
+          ).toString(),
         },
       ],
     },
@@ -236,10 +238,10 @@ test('parsePacketsFromEvents', (t) => {
       type: 'execute',
       attributes: [
         {
-          key: fromBase64('X2NvbnRyYWN0X2FkZHJlc3M='),
+          key: fromBase64('X2NvbnRyYWN0X2FkZHJlc3M=').toString(),
           value: fromBase64(
             'anVubzE0eWYyNHBmY3pjc2xjaGRyMDR1NXAyeXc5enhmNmN2czN2aGU5cjlzcmY1cGc2eTJwN25xZHFuN2tu'
-          ),
+          ).toString(),
         },
       ],
     },
@@ -247,10 +249,10 @@ test('parsePacketsFromEvents', (t) => {
       type: 'execute',
       attributes: [
         {
-          key: fromBase64('X2NvbnRyYWN0X2FkZHJlc3M='),
+          key: fromBase64('X2NvbnRyYWN0X2FkZHJlc3M=').toString(),
           value: fromBase64(
             'anVubzFlN3ZzNzZtYXJrc2h1czM5ZXlmZWZoMnkzdDlndWdlNHQwa3ZxeWEzcTZ2YW1nc2VqaDRxOGx4dHE5'
-          ),
+          ).toString(),
         },
       ],
     },
@@ -258,14 +260,14 @@ test('parsePacketsFromEvents', (t) => {
       type: 'wasm',
       attributes: [
         {
-          key: fromBase64('X2NvbnRyYWN0X2FkZHJlc3M='),
+          key: fromBase64('X2NvbnRyYWN0X2FkZHJlc3M=').toString(),
           value: fromBase64(
             'anVubzFlN3ZzNzZtYXJrc2h1czM5ZXlmZWZoMnkzdDlndWdlNHQwa3ZxeWEzcTZ2YW1nc2VqaDRxOGx4dHE5'
-          ),
+          ).toString(),
         },
         {
-          key: fromBase64('YWN0aW9u'),
-          value: fromBase64('ZXhlY3V0ZV9nZXRfbmV4dF9yYW5kb21uZXNz'),
+          key: fromBase64('YWN0aW9u').toString(),
+          value: fromBase64('ZXhlY3V0ZV9nZXRfbmV4dF9yYW5kb21uZXNz').toString(),
         },
       ],
     },
@@ -273,56 +275,56 @@ test('parsePacketsFromEvents', (t) => {
       type: 'send_packet',
       attributes: [
         {
-          key: fromBase64('cGFja2V0X2NoYW5uZWxfb3JkZXJpbmc='),
-          value: fromBase64('T1JERVJfVU5PUkRFUkVE'),
+          key: fromBase64('cGFja2V0X2NoYW5uZWxfb3JkZXJpbmc=').toString(),
+          value: fromBase64('T1JERVJfVU5PUkRFUkVE').toString(),
         },
         {
-          key: fromBase64('cGFja2V0X2Nvbm5lY3Rpb24='),
-          value: fromBase64('Y29ubmVjdGlvbi0zMQ=='),
+          key: fromBase64('cGFja2V0X2Nvbm5lY3Rpb24=').toString(),
+          value: fromBase64('Y29ubmVjdGlvbi0zMQ==').toString(),
         },
         {
-          key: fromBase64('cGFja2V0X2RhdGE='),
+          key: fromBase64('cGFja2V0X2RhdGE=').toString(),
           value: fromBase64(
             'eyJhZnRlciI6IjE2NjYxNjkwMDM0MTM1NzgyNjkiLCJzZW5kZXIiOiJqdW5vMTR5ZjI0cGZjemNzbGNoZHIwNHU1cDJ5dzl6eGY2Y3ZzM3ZoZTlyOXNyZjVwZzZ5MnA3bnFkcW43a24iLCJqb2JfaWQiOiJzaW1vbi1yb2xsLTEifQ=='
-          ),
+          ).toString(),
         },
         {
-          key: fromBase64('cGFja2V0X2RhdGFfaGV4'),
+          key: fromBase64('cGFja2V0X2RhdGFfaGV4').toString(),
           value: fromBase64(
             'N2IyMjYxNjY3NDY1NzIyMjNhMjIzMTM2MzYzNjMxMzYzOTMwMzAzMzM0MzEzMzM1MzczODMyMzYzOTIyMmMyMjczNjU2ZTY0NjU3MjIyM2EyMjZhNzU2ZTZmMzEzNDc5NjYzMjM0NzA2NjYzN2E2MzczNmM2MzY4NjQ3MjMwMzQ3NTM1NzAzMjc5NzczOTdhNzg2NjM2NjM3NjczMzM3NjY4NjUzOTcyMzk3MzcyNjYzNTcwNjczNjc5MzI3MDM3NmU3MTY0NzE2ZTM3NmI2ZTIyMmMyMjZhNmY2MjVmNjk2NDIyM2EyMjczNjk2ZDZmNmUyZDcyNmY2YzZjMmQzMTIyN2Q='
-          ),
+          ).toString(),
         },
         {
-          key: fromBase64('cGFja2V0X2RzdF9jaGFubmVs'),
-          value: fromBase64('Y2hhbm5lbC0xMA=='),
+          key: fromBase64('cGFja2V0X2RzdF9jaGFubmVs').toString(),
+          value: fromBase64('Y2hhbm5lbC0xMA==').toString(),
         },
         {
-          key: fromBase64('cGFja2V0X2RzdF9wb3J0'),
+          key: fromBase64('cGFja2V0X2RzdF9wb3J0').toString(),
           value: fromBase64(
             'd2FzbS5ub2lzMWo3bTRmNjhscnVjZWc1eHEzZ2ZrZmRnZGd6MDJ2aHZscTJwNjd2Zjl2M2h3ZHlkYWF0M3NhanpjeTU='
-          ),
+          ).toString(),
         },
         {
-          key: fromBase64('cGFja2V0X3NlcXVlbmNl'),
-          value: fromBase64('NzUyNA=='),
+          key: fromBase64('cGFja2V0X3NlcXVlbmNl').toString(),
+          value: fromBase64('NzUyNA==').toString(),
         },
         {
-          key: fromBase64('cGFja2V0X3NyY19jaGFubmVs'),
-          value: fromBase64('Y2hhbm5lbC00Mg=='),
+          key: fromBase64('cGFja2V0X3NyY19jaGFubmVs').toString(),
+          value: fromBase64('Y2hhbm5lbC00Mg==').toString(),
         },
         {
-          key: fromBase64('cGFja2V0X3NyY19wb3J0'),
+          key: fromBase64('cGFja2V0X3NyY19wb3J0').toString(),
           value: fromBase64(
             'd2FzbS5qdW5vMWU3dnM3Nm1hcmtzaHVzMzlleWZlZmgyeTN0OWd1Z2U0dDBrdnF5YTNxNnZhbWdzZWpoNHE4bHh0cTk='
-          ),
+          ).toString(),
         },
         {
-          key: fromBase64('cGFja2V0X3RpbWVvdXRfaGVpZ2h0'),
-          value: fromBase64('MC0w'),
+          key: fromBase64('cGFja2V0X3RpbWVvdXRfaGVpZ2h0').toString(),
+          value: fromBase64('MC0w').toString(),
         },
         {
-          key: fromBase64('cGFja2V0X3RpbWVvdXRfdGltZXN0YW1w'),
-          value: fromBase64('MTY2NjE3MjYwMDQxMzU3ODI2OQ=='),
+          key: fromBase64('cGFja2V0X3RpbWVvdXRfdGltZXN0YW1w').toString(),
+          value: fromBase64('MTY2NjE3MjYwMDQxMzU3ODI2OQ==').toString(),
         },
       ],
     },
@@ -330,10 +332,10 @@ test('parsePacketsFromEvents', (t) => {
       type: 'execute',
       attributes: [
         {
-          key: fromBase64('X2NvbnRyYWN0X2FkZHJlc3M='),
+          key: fromBase64('X2NvbnRyYWN0X2FkZHJlc3M=').toString(),
           value: fromBase64(
             'anVubzFlN3ZzNzZtYXJrc2h1czM5ZXlmZWZoMnkzdDlndWdlNHQwa3ZxeWEzcTZ2YW1nc2VqaDRxOGx4dHE5'
-          ),
+          ).toString(),
         },
       ],
     },
@@ -341,14 +343,14 @@ test('parsePacketsFromEvents', (t) => {
       type: 'wasm',
       attributes: [
         {
-          key: fromBase64('X2NvbnRyYWN0X2FkZHJlc3M='),
+          key: fromBase64('X2NvbnRyYWN0X2FkZHJlc3M=').toString(),
           value: fromBase64(
             'anVubzFlN3ZzNzZtYXJrc2h1czM5ZXlmZWZoMnkzdDlndWdlNHQwa3ZxeWEzcTZ2YW1nc2VqaDRxOGx4dHE5'
-          ),
+          ).toString(),
         },
         {
-          key: fromBase64('YWN0aW9u'),
-          value: fromBase64('ZXhlY3V0ZV9nZXRfbmV4dF9yYW5kb21uZXNz'),
+          key: fromBase64('YWN0aW9u').toString(),
+          value: fromBase64('ZXhlY3V0ZV9nZXRfbmV4dF9yYW5kb21uZXNz').toString(),
         },
       ],
     },
@@ -356,56 +358,56 @@ test('parsePacketsFromEvents', (t) => {
       type: 'send_packet',
       attributes: [
         {
-          key: fromBase64('cGFja2V0X2NoYW5uZWxfb3JkZXJpbmc='),
-          value: fromBase64('T1JERVJfVU5PUkRFUkVE'),
+          key: fromBase64('cGFja2V0X2NoYW5uZWxfb3JkZXJpbmc=').toString(),
+          value: fromBase64('T1JERVJfVU5PUkRFUkVE').toString(),
         },
         {
-          key: fromBase64('cGFja2V0X2Nvbm5lY3Rpb24='),
-          value: fromBase64('Y29ubmVjdGlvbi0zMQ=='),
+          key: fromBase64('cGFja2V0X2Nvbm5lY3Rpb24=').toString(),
+          value: fromBase64('Y29ubmVjdGlvbi0zMQ==').toString(),
         },
         {
-          key: fromBase64('cGFja2V0X2RhdGE='),
+          key: fromBase64('cGFja2V0X2RhdGE=').toString(),
           value: fromBase64(
             'eyJhZnRlciI6IjE2NjYxNjkwMDM0MTM1NzgyNjkiLCJzZW5kZXIiOiJqdW5vMTR5ZjI0cGZjemNzbGNoZHIwNHU1cDJ5dzl6eGY2Y3ZzM3ZoZTlyOXNyZjVwZzZ5MnA3bnFkcW43a24iLCJqb2JfaWQiOiJzaW1vbi1yb2xsLTIifQ=='
-          ),
+          ).toString(),
         },
         {
-          key: fromBase64('cGFja2V0X2RhdGFfaGV4'),
+          key: fromBase64('cGFja2V0X2RhdGFfaGV4').toString(),
           value: fromBase64(
             'N2IyMjYxNjY3NDY1NzIyMjNhMjIzMTM2MzYzNjMxMzYzOTMwMzAzMzM0MzEzMzM1MzczODMyMzYzOTIyMmMyMjczNjU2ZTY0NjU3MjIyM2EyMjZhNzU2ZTZmMzEzNDc5NjYzMjM0NzA2NjYzN2E2MzczNmM2MzY4NjQ3MjMwMzQ3NTM1NzAzMjc5NzczOTdhNzg2NjM2NjM3NjczMzM3NjY4NjUzOTcyMzk3MzcyNjYzNTcwNjczNjc5MzI3MDM3NmU3MTY0NzE2ZTM3NmI2ZTIyMmMyMjZhNmY2MjVmNjk2NDIyM2EyMjczNjk2ZDZmNmUyZDcyNmY2YzZjMmQzMjIyN2Q='
-          ),
+          ).toString(),
         },
         {
-          key: fromBase64('cGFja2V0X2RzdF9jaGFubmVs'),
-          value: fromBase64('Y2hhbm5lbC0xMA=='),
+          key: fromBase64('cGFja2V0X2RzdF9jaGFubmVs').toString(),
+          value: fromBase64('Y2hhbm5lbC0xMA==').toString(),
         },
         {
-          key: fromBase64('cGFja2V0X2RzdF9wb3J0'),
+          key: fromBase64('cGFja2V0X2RzdF9wb3J0').toString(),
           value: fromBase64(
             'd2FzbS5ub2lzMWo3bTRmNjhscnVjZWc1eHEzZ2ZrZmRnZGd6MDJ2aHZscTJwNjd2Zjl2M2h3ZHlkYWF0M3NhanpjeTU='
-          ),
+          ).toString(),
         },
         {
-          key: fromBase64('cGFja2V0X3NlcXVlbmNl'),
-          value: fromBase64('NzUyNQ=='),
+          key: fromBase64('cGFja2V0X3NlcXVlbmNl').toString(),
+          value: fromBase64('NzUyNQ==').toString(),
         },
         {
-          key: fromBase64('cGFja2V0X3NyY19jaGFubmVs'),
-          value: fromBase64('Y2hhbm5lbC00Mg=='),
+          key: fromBase64('cGFja2V0X3NyY19jaGFubmVs').toString(),
+          value: fromBase64('Y2hhbm5lbC00Mg==').toString(),
         },
         {
-          key: fromBase64('cGFja2V0X3NyY19wb3J0'),
+          key: fromBase64('cGFja2V0X3NyY19wb3J0').toString(),
           value: fromBase64(
             'd2FzbS5qdW5vMWU3dnM3Nm1hcmtzaHVzMzlleWZlZmgyeTN0OWd1Z2U0dDBrdnF5YTNxNnZhbWdzZWpoNHE4bHh0cTk='
-          ),
+          ).toString(),
         },
         {
-          key: fromBase64('cGFja2V0X3RpbWVvdXRfaGVpZ2h0'),
-          value: fromBase64('MC0w'),
+          key: fromBase64('cGFja2V0X3RpbWVvdXRfaGVpZ2h0').toString(),
+          value: fromBase64('MC0w').toString(),
         },
         {
-          key: fromBase64('cGFja2V0X3RpbWVvdXRfdGltZXN0YW1w'),
-          value: fromBase64('MTY2NjE3MjYwMDQxMzU3ODI2OQ=='),
+          key: fromBase64('cGFja2V0X3RpbWVvdXRfdGltZXN0YW1w').toString(),
+          value: fromBase64('MTY2NjE3MjYwMDQxMzU3ODI2OQ==').toString(),
         },
       ],
     },
@@ -413,10 +415,10 @@ test('parsePacketsFromEvents', (t) => {
       type: 'execute',
       attributes: [
         {
-          key: fromBase64('X2NvbnRyYWN0X2FkZHJlc3M='),
+          key: fromBase64('X2NvbnRyYWN0X2FkZHJlc3M=').toString(),
           value: fromBase64(
             'anVubzFlN3ZzNzZtYXJrc2h1czM5ZXlmZWZoMnkzdDlndWdlNHQwa3ZxeWEzcTZ2YW1nc2VqaDRxOGx4dHE5'
-          ),
+          ).toString(),
         },
       ],
     },
@@ -424,14 +426,14 @@ test('parsePacketsFromEvents', (t) => {
       type: 'wasm',
       attributes: [
         {
-          key: fromBase64('X2NvbnRyYWN0X2FkZHJlc3M='),
+          key: fromBase64('X2NvbnRyYWN0X2FkZHJlc3M=').toString(),
           value: fromBase64(
             'anVubzFlN3ZzNzZtYXJrc2h1czM5ZXlmZWZoMnkzdDlndWdlNHQwa3ZxeWEzcTZ2YW1nc2VqaDRxOGx4dHE5'
-          ),
+          ).toString(),
         },
         {
-          key: fromBase64('YWN0aW9u'),
-          value: fromBase64('ZXhlY3V0ZV9nZXRfbmV4dF9yYW5kb21uZXNz'),
+          key: fromBase64('YWN0aW9u').toString(),
+          value: fromBase64('ZXhlY3V0ZV9nZXRfbmV4dF9yYW5kb21uZXNz').toString(),
         },
       ],
     },
@@ -439,56 +441,56 @@ test('parsePacketsFromEvents', (t) => {
       type: 'send_packet',
       attributes: [
         {
-          key: fromBase64('cGFja2V0X2NoYW5uZWxfb3JkZXJpbmc='),
-          value: fromBase64('T1JERVJfVU5PUkRFUkVE'),
+          key: fromBase64('cGFja2V0X2NoYW5uZWxfb3JkZXJpbmc=').toString(),
+          value: fromBase64('T1JERVJfVU5PUkRFUkVE').toString(),
         },
         {
-          key: fromBase64('cGFja2V0X2Nvbm5lY3Rpb24='),
-          value: fromBase64('Y29ubmVjdGlvbi0zMQ=='),
+          key: fromBase64('cGFja2V0X2Nvbm5lY3Rpb24=').toString(),
+          value: fromBase64('Y29ubmVjdGlvbi0zMQ==').toString(),
         },
         {
-          key: fromBase64('cGFja2V0X2RhdGE='),
+          key: fromBase64('cGFja2V0X2RhdGE=').toString(),
           value: fromBase64(
             'eyJhZnRlciI6IjE2NjYxNjkwMDM0MTM1NzgyNjkiLCJzZW5kZXIiOiJqdW5vMTR5ZjI0cGZjemNzbGNoZHIwNHU1cDJ5dzl6eGY2Y3ZzM3ZoZTlyOXNyZjVwZzZ5MnA3bnFkcW43a24iLCJqb2JfaWQiOiJzaW1vbi1yb2xsLTMifQ=='
-          ),
+          ).toString(),
         },
         {
-          key: fromBase64('cGFja2V0X2RhdGFfaGV4'),
+          key: fromBase64('cGFja2V0X2RhdGFfaGV4').toString(),
           value: fromBase64(
             'N2IyMjYxNjY3NDY1NzIyMjNhMjIzMTM2MzYzNjMxMzYzOTMwMzAzMzM0MzEzMzM1MzczODMyMzYzOTIyMmMyMjczNjU2ZTY0NjU3MjIyM2EyMjZhNzU2ZTZmMzEzNDc5NjYzMjM0NzA2NjYzN2E2MzczNmM2MzY4NjQ3MjMwMzQ3NTM1NzAzMjc5NzczOTdhNzg2NjM2NjM3NjczMzM3NjY4NjUzOTcyMzk3MzcyNjYzNTcwNjczNjc5MzI3MDM3NmU3MTY0NzE2ZTM3NmI2ZTIyMmMyMjZhNmY2MjVmNjk2NDIyM2EyMjczNjk2ZDZmNmUyZDcyNmY2YzZjMmQzMzIyN2Q='
-          ),
+          ).toString(),
         },
         {
-          key: fromBase64('cGFja2V0X2RzdF9jaGFubmVs'),
-          value: fromBase64('Y2hhbm5lbC0xMA=='),
+          key: fromBase64('cGFja2V0X2RzdF9jaGFubmVs').toString(),
+          value: fromBase64('Y2hhbm5lbC0xMA==').toString(),
         },
         {
-          key: fromBase64('cGFja2V0X2RzdF9wb3J0'),
+          key: fromBase64('cGFja2V0X2RzdF9wb3J0').toString(),
           value: fromBase64(
             'd2FzbS5ub2lzMWo3bTRmNjhscnVjZWc1eHEzZ2ZrZmRnZGd6MDJ2aHZscTJwNjd2Zjl2M2h3ZHlkYWF0M3NhanpjeTU='
-          ),
+          ).toString(),
         },
         {
-          key: fromBase64('cGFja2V0X3NlcXVlbmNl'),
-          value: fromBase64('NzUyNg=='),
+          key: fromBase64('cGFja2V0X3NlcXVlbmNl').toString(),
+          value: fromBase64('NzUyNg==').toString(),
         },
         {
-          key: fromBase64('cGFja2V0X3NyY19jaGFubmVs'),
-          value: fromBase64('Y2hhbm5lbC00Mg=='),
+          key: fromBase64('cGFja2V0X3NyY19jaGFubmVs').toString(),
+          value: fromBase64('Y2hhbm5lbC00Mg==').toString(),
         },
         {
-          key: fromBase64('cGFja2V0X3NyY19wb3J0'),
+          key: fromBase64('cGFja2V0X3NyY19wb3J0').toString(),
           value: fromBase64(
             'd2FzbS5qdW5vMWU3dnM3Nm1hcmtzaHVzMzlleWZlZmgyeTN0OWd1Z2U0dDBrdnF5YTNxNnZhbWdzZWpoNHE4bHh0cTk='
-          ),
+          ).toString(),
         },
         {
-          key: fromBase64('cGFja2V0X3RpbWVvdXRfaGVpZ2h0'),
-          value: fromBase64('MC0w'),
+          key: fromBase64('cGFja2V0X3RpbWVvdXRfaGVpZ2h0').toString(),
+          value: fromBase64('MC0w').toString(),
         },
         {
-          key: fromBase64('cGFja2V0X3RpbWVvdXRfdGltZXN0YW1w'),
-          value: fromBase64('MTY2NjE3MjYwMDQxMzU3ODI2OQ=='),
+          key: fromBase64('cGFja2V0X3RpbWVvdXRfdGltZXN0YW1w').toString(),
+          value: fromBase64('MTY2NjE3MjYwMDQxMzU3ODI2OQ==').toString(),
         },
       ],
     },

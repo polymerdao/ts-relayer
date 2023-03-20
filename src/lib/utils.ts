@@ -1,10 +1,9 @@
 import { fromHex, fromUtf8, toHex, toUtf8 } from '@cosmjs/encoding';
 import { DeliverTxResponse, logs } from '@cosmjs/stargate';
 import {
-  BlockResultsResponse,
   ReadonlyDateWithNanoseconds,
   ValidatorPubkey as RpcPubKey,
-  tendermint34,
+  tendermint37,
 } from '@cosmjs/tendermint-rpc';
 import { HashOp, LengthOp } from 'cosmjs-types/confio/proofs';
 import { Timestamp } from 'cosmjs-types/google/protobuf/timestamp';
@@ -107,7 +106,7 @@ export function secondsFromDateNanos(
 }
 
 export function buildConsensusState(
-  header: tendermint34.Header
+  header: tendermint37.Header
 ): TendermintConsensusState {
   return TendermintConsensusState.fromPartial({
     timestamp: timestampFromDateNanos(header.time),
@@ -200,22 +199,21 @@ interface ParsedEvent {
  * If this function fails to decode data in one attribute, the key or value
  * is replaces with replacement characters.
  */
-export function stringifyEvent(event: tendermint34.Event): ParsedEvent {
+export function stringifyEvent(event: tendermint37.Event): ParsedEvent {
   const { type, attributes } = event;
   return {
     type,
     attributes: attributes.map(({ key, value }): ParsedAttribute => {
       return {
-        // Lossy UTF-8 conversion using � replacement characters
-        key: fromUtf8(key, true),
-        value: fromUtf8(value, true),
+        key: key,
+        value: value,
       };
     }),
   };
 }
 
 export function parsePacketsFromBlockResult(
-  result: BlockResultsResponse
+  result: tendermint37.BlockResultsResponse
 ): Packet[] {
   return parsePacketsFromEvents([
     ...result.beginBlockEvents,
@@ -228,7 +226,7 @@ export function parsePacketsFromBlockResult(
  * and parsed the events into `Packet`s.
  */
 export function parsePacketsFromEvents(
-  events: readonly tendermint34.Event[]
+  events: readonly tendermint37.Event[]
 ): Packet[] {
   return events
     .filter(({ type }) => type === 'send_packet')
@@ -304,11 +302,13 @@ export function parseAcksFromLogs(logs: readonly logs.Log[]): Ack[] {
 }
 
 /** Extract packet data by first trying to read the ibc event's `packet_data_hex` field; if not available, then try the old `packet_data` */
-function getPktData(attributesObj: Record<string, string | undefined>) : Uint8Array {
+function getPktData(
+  attributesObj: Record<string, string | undefined>
+): Uint8Array {
   if (attributesObj.packet_data_hex) {
-    return fromHex(attributesObj.packet_data_hex)
+    return fromHex(attributesObj.packet_data_hex);
   }
-  return toUtf8(attributesObj.packet_data ?? '')
+  return toUtf8(attributesObj.packet_data ?? '');
 }
 
 export function parseAck({ type, attributes }: ParsedEvent): Ack {
@@ -333,7 +333,7 @@ export function parseAck({ type, attributes }: ParsedEvent): Ack {
     /** identifies the channel end on the receiving chain. */
     destinationChannel: attributesObj.packet_dst_channel,
     /** actual opaque bytes transferred directly to the application module */
-    data: getPktData(attributesObj) ,
+    data: getPktData(attributesObj),
     /** block height after which the packet times out */
     timeoutHeight: parseHeightAttribute(attributesObj.packet_timeout_height),
     /** block timestamp (in nanoseconds) after which the packet times out */
