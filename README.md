@@ -1,3 +1,12 @@
+## PolymeraseDAO forked ts-relayer
+**Why?**
+To use hex data formatted ibc packets instead of raw string. Raw string can cause ibc packets to be malformatted, which leads to failed packet commitment verification.
+
+**Installation**
+```sh
+npm i -g polymerdao/ts-relayer
+```
+
 # Relayer
 
 Typescript implementation of an [IBC](https://ibcprotocol.org/) Relayer.
