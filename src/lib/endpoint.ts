@@ -65,7 +65,7 @@ export class Endpoint {
     minHeight,
     maxHeight,
   }: QueryOpts = {}): Promise<PacketWithMetadata[]> {
-    let query = `send_packet.packet_connection='${this.connectionID}'`;
+    let query = `send_packet.packet_sequence EXISTS`;
     if (minHeight) {
       query = `${query} AND block.height>=${minHeight}`;
     }
@@ -93,7 +93,7 @@ export class Endpoint {
     minHeight,
     maxHeight,
   }: QueryOpts = {}): Promise<PacketWithMetadata[]> {
-    let query = `send_packet.packet_connection='${this.connectionID}'`;
+    let query = `send_packet.packet_sequence EXISTS`;
     if (minHeight) {
       query = `${query} AND tx.height>=${minHeight}`;
     }
