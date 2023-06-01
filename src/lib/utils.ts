@@ -1,4 +1,4 @@
-import { fromHex, fromUtf8, toHex, toUtf8 } from '@cosmjs/encoding';
+import { fromHex, fromUtf8, toBase64, toHex, toUtf8 } from '@cosmjs/encoding';
 import { DeliverTxResponse, logs } from '@cosmjs/stargate';
 import {
   ReadonlyDateWithNanoseconds,
@@ -311,6 +311,18 @@ function getPktData(
   return toUtf8(attributesObj.packet_data ?? '');
 }
 
+function getPktDataAck(
+  attributesObj: Record<string, string | undefined>
+): Uint8Array {
+  const ack = (() => {
+    if (attributesObj.packet_data_hex) {
+      return fromHex(attributesObj.packet_data_hex);
+    }
+    return toUtf8(attributesObj.packet_data ?? '');
+  })();
+  return toUtf8(fromUtf8(ack));
+}
+
 export function parseAck({ type, attributes }: ParsedEvent): Ack {
   if (type !== 'write_acknowledgement') {
     throw new Error(`Cannot parse event of type ${type}`);
@@ -333,7 +345,7 @@ export function parseAck({ type, attributes }: ParsedEvent): Ack {
     /** identifies the channel end on the receiving chain. */
     destinationChannel: attributesObj.packet_dst_channel,
     /** actual opaque bytes transferred directly to the application module */
-    data: getPktData(attributesObj),
+    data: getPktDataAck(attributesObj),
     /** block height after which the packet times out */
     timeoutHeight: parseHeightAttribute(attributesObj.packet_timeout_height),
     /** block timestamp (in nanoseconds) after which the packet times out */
@@ -342,7 +354,21 @@ export function parseAck({ type, attributes }: ParsedEvent): Ack {
       attributesObj.packet_timeout_timestamp
     ),
   });
-  const acknowledgement = toUtf8(attributesObj.packet_ack ?? '');
+
+  const ack = JSON.stringify({
+    result: toBase64(
+      toUtf8(
+        JSON.stringify({
+          moduleName: 'polyibc',
+          packetId: attributesObj.packet_sequence,
+        })
+      )
+    ),
+  });
+  //  const origAck = JSON.stringify({
+  //    result: attributesObj.packet_ack ?? '',
+  //  });
+  const acknowledgement = toUtf8(ack);
   return {
     acknowledgement,
     originalPacket,

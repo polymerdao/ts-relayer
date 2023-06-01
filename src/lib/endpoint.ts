@@ -132,7 +132,7 @@ export class Endpoint {
     minHeight,
     maxHeight,
   }: QueryOpts = {}): Promise<AckWithMetadata[]> {
-    let query = `write_acknowledgement.packet_connection='${this.connectionID}'`;
+    let query = `write_acknowledgement.packet_sequence EXISTS`;
     if (minHeight) {
       query = `${query} AND tx.height>=${minHeight}`;
     }
@@ -152,6 +152,7 @@ export class Endpoint {
         })
       );
     });
+    console.log(JSON.stringify(out, null, 2));
     return out;
   }
 }
