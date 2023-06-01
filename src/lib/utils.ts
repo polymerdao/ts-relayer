@@ -324,10 +324,10 @@ function getPktDataAck(
     JSON.stringify({
       remoteSenderAddress: toUtf8('remoteSenderAddress'),
       proof: {
-        proof: toUtf8('proof'),
-        key: toUtf8('key'),
-        value: toUtf8('value'),
-        height: { revisionNumber: '0', revisionHeight: '0' },
+        //       proof: toUtf8('proof'),
+        //       key: toUtf8('key'),
+        //       value: toUtf8('value'),
+        //       height: { revisionNumber: '0', revisionHeight: '0' },
       },
       payload: ack,
     })
