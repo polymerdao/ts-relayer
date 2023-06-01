@@ -320,7 +320,18 @@ function getPktDataAck(
     }
     return toUtf8(attributesObj.packet_data ?? '');
   })();
-  return toUtf8(fromUtf8(ack));
+  return toUtf8(
+    JSON.stringify({
+      remoteSenderAddress: toUtf8('remoteSenderAddress'),
+      proof: {
+        proof: toUtf8('proof'),
+        key: toUtf8('key'),
+        value: toUtf8('value'),
+        height: { revisionNumber: '0', revisionHeight: '0' },
+      },
+      payload: ack,
+    })
+  );
 }
 
 export function parseAck({ type, attributes }: ParsedEvent): Ack {
