@@ -498,11 +498,16 @@ export class Link {
     timedoutThresholdSeconds = 0
   ): Promise<{ heights: RelayedHeights; info: RelayInfo }> {
     // FIXME: is there a cleaner way to get the height we query at?
+    // currently, use a 1000 block look back window
+    const minHeightA = relayFrom.packetHeightA
+      ? Math.max(1, relayFrom.packetHeightA - 1000)
+      : 1;
     const [packetHeightA, packetHeightB, packetsA, packetsB] =
       await Promise.all([
         this.endA.client.currentHeight(),
         this.endB.client.currentHeight(),
-        this.getPendingPackets('A', { minHeight: relayFrom.packetHeightA }),
+        // this.getPendingPackets('A', { minHeight: relayFrom.packetHeightA }),
+        this.getPendingPackets('A', { minHeight: minHeightA }),
         this.getPendingPackets('B', { minHeight: relayFrom.packetHeightB }),
       ]);
 
